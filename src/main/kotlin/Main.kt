@@ -2,6 +2,8 @@ package reffined
 
 
 fun main() {
-    println("Hello Kotlin")
+    object {}::class.java.getResource("/1.txt")?.readText().apply {
+        println(this)
+    }
 }
 
