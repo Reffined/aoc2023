@@ -1,9 +1,9 @@
 plugins {
     kotlin("jvm") version "2.0.0"
+
 }
 
 group = "Reffined"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -17,6 +17,22 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.named<Jar>("jar") {
+    manifest {
+        attributes["Main-Class"] = "reffined.MainKt"
+    }
+}
+
+
+
+tasks.register<JavaExec>("buildAndRunJar") {
+    group = "MyConfig"
+    dependsOn(tasks.named("jar").get().path)
+    classpath(files(tasks.named("jar").get().outputs.files))
+}
+
 kotlin {
     jvmToolchain(21)
+
 }
