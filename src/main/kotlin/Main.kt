@@ -1,9 +1,21 @@
 package reffined
 
+import java.nio.charset.Charset
+
 
 fun main() {
-    object {}::class.java.getResource("/1.txt")?.readText().apply {
-        println(this)
+    val file =
+        loadResource("/1.txt")?.toString(Charset.defaultCharset()) ?: throw NullPointerException("couldn't read file")
+    var sum = 0
+
+    file.split("\n").map {
+        it.replace(Regex("\\D"), "").toCharArray().apply {
+            val num = "${first()}${last()}"
+            sum += num.toInt()
+            println(sum)
+        }
     }
+    println(sum)
+
 }
 
